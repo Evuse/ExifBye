@@ -96,6 +96,8 @@ Prima di usare l’app su file sensibili:
 
 Apri direttamente il progetto incluso: non servono script di installazione. Le API usate appartengono agli SDK Apple. Il progetto usa Swift 5 per evitare di richiedere la migrazione alle regole di concorrenza di Swift 6 su Xcode 16.2.
 
+`VideoCleaner` importa AVFoundation con `@preconcurrency`: nell’SDK di Xcode 16.2 `AVAssetTrack` non è dichiarato `Sendable`. Le tracce vengono usate dal solo worker seriale dopo il caricamento delle proprietà; il chiamante non le modifica durante l’esportazione. Questo applica la compatibilità di concorrenza al modulo AVFoundation senza disattivare gli avvisi del progetto.
+
 `scripts/generate_project.py` ricrea progetto e schema con Python 3 se aggiungi nuovi file Swift. Non eseguirlo dopo aver personalizzato firma/Bundle Identifier senza salvare prima tali modifiche: il generatore ripristina i valori predefiniti. I file generati sono già inclusi; **non serve eseguirlo per installare l’app**.
 
 ```sh

@@ -1,4 +1,7 @@
-import AVFoundation
+// Xcode 16.2's AVFoundation SDK does not declare AVAssetTrack as Sendable.
+// After loading their properties, tracks are used only by the serial export worker;
+// the caller does not access or mutate them while that worker is running.
+@preconcurrency import AVFoundation
 import CoreImage
 import CoreVideo
 
